@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 struct Product {
-    var albumName : String
-    var albumImage : UIImage
-    var albumDesc : String
+    var productName : String
+    var productImage : UIImage!
+    var productDesc : String
 }

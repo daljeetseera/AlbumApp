@@ -12,14 +12,14 @@ class customCell:UITableViewCell
 {
     var product : Product? {
         didSet {
-            productImage.image = product?.albumImage
-            productNameLabel.text = product?.albumName
-            productDescriptionLabel.text = product?.albumDesc
+            productImage.image = product?.productImage
+            productNameLabel.text = product?.productName
+            productDescriptionLabel.text = product?.productDesc
         }
     }
- 
+    
     private let productImage : UIImageView = {
-        let imgView = UIImageView(image: UIImage(named: "img4.png"))
+        let imgView = UIImageView()
         imgView.contentMode = .scaleAspectFit
         imgView.clipsToBounds = true
         return imgView
@@ -42,25 +42,24 @@ class customCell:UITableViewCell
         lbl.numberOfLines = 0
         return lbl
     }()
-
+    
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addSubview(productImage)
         addSubview(productNameLabel)
         addSubview(productDescriptionLabel)
-    
+        
         productImage.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 0, width: 90, height: 0, enableInsets: false)
-        
-        
-        productImage.
         
         productNameLabel.anchor(top: topAnchor, left: productImage.rightAnchor, bottom: nil, right: nil, paddingTop: 20, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: frame.size.width / 2, height: 0, enableInsets: false)
         productDescriptionLabel.anchor(top: productNameLabel.bottomAnchor, left: productImage.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: frame.size.width / 2, height: 0, enableInsets: false)
         
-        
     }
-
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
 }
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource
@@ -73,27 +72,33 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad()
     {
         mainViewFrame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
+        createProductArray()
         createTableView()
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
     
     func createProductArray() {
-        products.append(Product(albumName: "Glasses", albumImage: UIImage(named: "img4.png")  , albumDesc: "This is best Glasses I've ever seen"))
-        products.append(Product(albumName: "Desert", albumImage: UIImage(named: "img4.png"), albumDesc: "This is so yummy"))
-        products.append(Product(albumName: "Camera Lens", albumImage: UIImage(named: "img4.png"), albumDesc: "I wish I had this camera lens"))
+        
+        let img:UIImage = UIImage(named: "PlaceHolder")!
+        
+        products.append(Product(productName: "Glasses", productImage: img , productDesc: "This is best Glasses I've ever seen"))
+        products.append(Product(productName: "Desert", productImage: img, productDesc: "This is so yummy"))
+        products.append(Product(productName: "Camera Lens", productImage: img, productDesc: "I wish I had this camera lens"))
     }
     
     func createTableView()
     {
-        albumListTable.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
-        albumListTable.rowHeight = UITableView.automaticDimension
-        albumListTable.estimatedRowHeight = 60
+        albumListTable.register(customCell.self, forCellReuseIdentifier: cellID)
         albumListTable.delegate = self
         albumListTable.dataSource = self
         albumListTable.frame = mainViewFrame
         self.view.addSubview(albumListTable)
         albumListTable.reloadData()
+    }
+    
+     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -102,25 +107,27 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return 5
+        return products.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellID) as! customCell
+      //  let cell = tableView.dequeueReusableCell(withIdentifier: cellID) as! customCell
         //   let cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: "CustomCell")
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath as IndexPath) as! customCell
+        let currentLastItem = products[indexPath.row]
+        cell.product = currentLastItem
+      //  cell.detailTextLabel?.text = currentLastItem.albumDesc
+     //   cell.imageView?.image = currentLastItem.albumImage
         
-        cell.albumName?.frame = CGRect(x: 0, y: 0, width: 100, height: 25)
-        cell.albumName?.text = "Album \(indexPath.row)"
-
-       /*
-        cell.textLabel?.text = "Album \(indexPath.row)"
-        cell.detailTextLabel?.text = "Details \(indexPath.row)"
-        
-        // cell.imageView?.image = UIImage(named: "front.jpg")
-        cell.imageView?.loadImageUsingCache(withUrl: "https://unsplash.com/photos/HUBofEFQ6CA/download?force=true")
-        
-       */
+        /*
+         cell.textLabel?.text = "Album \(indexPath.row)"
+         cell.detailTextLabel?.text = "Details \(indexPath.row)"
+         
+         // cell.imageView?.image = UIImage(named: "front.jpg")
+         cell.imageView?.loadImageUsingCache(withUrl: "https://unsplash.com/photos/HUBofEFQ6CA/download?force=true")
+         
+         */
         
         //      if let url = URL(string: "https://unsplash.com/photos/HUBofEFQ6CA/download?force=true")
         //        {
@@ -140,3 +147,42 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
 }
 
+extension UIView {
+    
+    func anchor (top: NSLayoutYAxisAnchor?, left: NSLayoutXAxisAnchor?, bottom: NSLayoutYAxisAnchor?, right: NSLayoutXAxisAnchor?, paddingTop: CGFloat, paddingLeft: CGFloat, paddingBottom: CGFloat, paddingRight: CGFloat, width: CGFloat, height: CGFloat, enableInsets: Bool) {
+        var topInset = CGFloat(0)
+        var bottomInset = CGFloat(0)
+        
+        if #available(iOS 11, *), enableInsets {
+            let insets = self.safeAreaInsets
+            topInset = insets.top
+            bottomInset = insets.bottom
+            
+            //   print("Top: \(topInset)”)
+            //     print("bottom: \(bottomInset)”)
+        }
+        
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        if let top = top {
+            self.topAnchor.constraint(equalTo: top, constant: paddingTop+topInset).isActive = true
+        }
+        if let left = left {
+            self.leftAnchor.constraint(equalTo: left, constant: paddingLeft).isActive = true
+        }
+        if let right = right {
+            rightAnchor.constraint(equalTo: right, constant: -paddingRight).isActive = true
+        }
+        if let bottom = bottom {
+            bottomAnchor.constraint(equalTo: bottom, constant: -paddingBottom-bottomInset).isActive = true
+        }
+        if height != 0 {
+            heightAnchor.constraint(equalToConstant: height).isActive = true
+        }
+        if width != 0 {
+            widthAnchor.constraint(equalToConstant: width).isActive = true
+        }
+        
+    }
+    
+}

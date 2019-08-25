@@ -14,6 +14,7 @@
 		854BCF5C23125ABF00D18DE8 /* UIImageViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854BCF5B23125ABF00D18DE8 /* UIImageViewHelper.swift */; };
 		854BCF5E23125E0300D18DE8 /* product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854BCF5D23125E0300D18DE8 /* product.swift */; };
 		854BCF6023125EED00D18DE8 /* img4.png in Resources */ = {isa = PBXBuildFile; fileRef = 854BCF5F23125EED00D18DE8 /* img4.png */; };
+		854BCF62231299A500D18DE8 /* PlaceHolder.png in Resources */ = {isa = PBXBuildFile; fileRef = 854BCF61231299A500D18DE8 /* PlaceHolder.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		854BCF5B23125ABF00D18DE8 /* UIImageViewHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageViewHelper.swift; sourceTree = "<group>"; };
 		854BCF5D23125E0300D18DE8 /* product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = product.swift; sourceTree = "<group>"; };
 		854BCF5F23125EED00D18DE8 /* img4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img4.png; sourceTree = "<group>"; };
+		854BCF61231299A500D18DE8 /* PlaceHolder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlaceHolder.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,11 +63,12 @@
 				854BCF4923125A3A00D18DE8 /* AppDelegate.swift */,
 				854BCF5F23125EED00D18DE8 /* img4.png */,
 				854BCF4B23125A3A00D18DE8 /* ViewController.swift */,
+				854BCF61231299A500D18DE8 /* PlaceHolder.png */,
+				854BCF5D23125E0300D18DE8 /* product.swift */,
 				854BCF5B23125ABF00D18DE8 /* UIImageViewHelper.swift */,
 				854BCF5023125A3A00D18DE8 /* Assets.xcassets */,
 				854BCF5223125A3A00D18DE8 /* LaunchScreen.storyboard */,
 				854BCF5523125A3A00D18DE8 /* Info.plist */,
-				854BCF5D23125E0300D18DE8 /* product.swift */,
 			);
 			path = AlbumApp;
 			sourceTree = "<group>";
@@ -129,6 +132,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				854BCF5423125A3A00D18DE8 /* LaunchScreen.storyboard in Resources */,
+				854BCF62231299A500D18DE8 /* PlaceHolder.png in Resources */,
 				854BCF5123125A3A00D18DE8 /* Assets.xcassets in Resources */,
 				854BCF6023125EED00D18DE8 /* img4.png in Resources */,
 			);
