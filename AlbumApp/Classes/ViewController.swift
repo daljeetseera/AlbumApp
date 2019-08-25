@@ -2,38 +2,38 @@
 //  ViewController.swift
 //  AlbumApp
 //
-//  Created by Daljeet Singh on 25/08/19.
+//  Created by Amish on 25/08/19.
 //  Copyright © 2019 Amish. All rights reserved.
 //
 
 import UIKit
 
-class customCell:UITableViewCell
+class customCell : UITableViewCell
 {
-    var product : Product? {
+    var album : Album! {
         didSet {
             
-            if let imageUrlStr = product?.productImageURL
+            if let imageUrlStr = album.artworkUrl100
             {
-                productImage.loadImageUsingCache(withUrl: imageUrlStr)
+                albumImage.loadImageUsingCache(withUrl: imageUrlStr)
             }
             else
             {
-                productImage.image = UIImage(named: "PlaceHolder.png")
+                albumImage.image = UIImage(named: "PlaceHolder.png")
             }
-            productNameLabel.text = product?.productName
-            productDescriptionLabel.text = product?.productDesc
+            albumNameLabel.text = album.name
+            albumDescriptionLabel.text = album.artistName
         }
     }
     
-    private let productImage : UIImageView = {
+    private let albumImage : UIImageView = {
         let imgView = UIImageView()
         imgView.contentMode = .scaleAspectFit
         imgView.clipsToBounds = true
         return imgView
     }()
     
-    private let productNameLabel : UILabel = {
+    private let albumNameLabel : UILabel = {
         let lbl = UILabel()
         lbl.textColor = .black
         lbl.font = UIFont.boldSystemFont(ofSize: 16)
@@ -42,7 +42,7 @@ class customCell:UITableViewCell
     }()
     
     
-    private let productDescriptionLabel : UILabel = {
+    private let albumDescriptionLabel : UILabel = {
         let lbl = UILabel()
         lbl.textColor = .black
         lbl.font = UIFont.systemFont(ofSize: 16)
@@ -54,16 +54,18 @@ class customCell:UITableViewCell
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        addSubview(productImage)
-        addSubview(productNameLabel)
-        addSubview(productDescriptionLabel)
+        addSubview(albumImage)
+        addSubview(albumNameLabel)
+        addSubview(albumDescriptionLabel)
         
-        productImage.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 0, width: 90, height: 0, enableInsets: false)
+        albumImage.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 0, width: 90, height: 0, enableInsets: false)
         
-        productNameLabel.anchor(top: topAnchor, left: productImage.rightAnchor, bottom: nil, right: nil, paddingTop: 20, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: frame.size.width / 2, height: 0, enableInsets: false)
-        productDescriptionLabel.anchor(top: productNameLabel.bottomAnchor, left: productImage.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: frame.size.width / 2, height: 0, enableInsets: false)
+        albumNameLabel.anchor(top: topAnchor, left: albumImage.rightAnchor, bottom: nil, right: nil, paddingTop: 20, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: frame.size.width / 2, height: 0, enableInsets: false)
+        
+        albumDescriptionLabel.anchor(top: albumNameLabel.bottomAnchor, left: albumImage.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: frame.size.width / 2, height: 0, enableInsets: false)
         
     }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -75,48 +77,37 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var mainViewFrame = CGRect()
     let albumListTable = UITableView()
     let cellID = "CustomCell"
-    var products:[Product] = [Product]()
+    var albums = [Album]()
     
     override func viewDidLoad()
     {
         mainViewFrame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
         self.createTableView()
-        createProductArray()
+        fetchAlbums()
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
     
-    func createProductArray() {
+    func fetchAlbums() {
         
-        
-        /*  let img:UIImage = UIImage(named: "PlaceHolder")!
-         
-         products.append(Product(productName: "Glasses", productImage: img , productDesc: "This is best Glasses I've ever seen"))
-         products.append(Product(productName: "Desert", productImage: img, productDesc: "This is so yummy"))
-         products.append(Product(productName: "Camera Lens", productImage: img, productDesc: "I wish I had this camera lens"))
-         */
-        
-        ApiManager().postApi()
+        let loader = AppLoader(frame: self.view.bounds)
+        self.view.addSubview(loader)
+        loader.showLoaderWithMessage("Loading...")
+        ApiManager().getAlbums()
             { (status, result, error) in
-                
-                print("final result \(status)")
-                
-                if status
-                {
-                    if let productArray = result?.results
-                    {
-                        for item in productArray
-                        {
-                            self.products.append(Product(productName: item.artistName ?? "", productImageURL: item.artworkUrl100 ?? "" , productDesc: item.name ?? ""))
-                        }
+                if status {
+                    AppLoader.hideLoaderIn(self.view)
+                    print("final result \(status)")
+                    if let albumList = result {
+                        self.albums = albumList
                     }
                     DispatchQueue.main.async  {
-                             self.albumListTable.reloadData()
+                        self.albumListTable.reloadData()
                     }
-           
+                } else {
+                    AppLoader.showErrorIn(view: self.view, withMessage: "Could not fetch details at the moment. Please try again later...")
                 }
-            }
-        
+        }
     }
     
     func createTableView()
@@ -133,47 +124,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return 100
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return products.count
+        return albums.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         tableView.deselectRow(at: indexPath, animated: true)
-        //  let cell = tableView.dequeueReusableCell(withIdentifier: cellID) as! customCell
-        //   let cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: "CustomCell")
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath as IndexPath) as! customCell
-        let currentLastItem = products[indexPath.row]
-        cell.product = currentLastItem
-        //  cell.detailTextLabel?.text = currentLastItem.albumDesc
-        //   cell.imageView?.image = currentLastItem.albumImage
-        
-        /*
-         cell.textLabel?.text = "Album \(indexPath.row)"
-         cell.detailTextLabel?.text = "Details \(indexPath.row)"
-         
-         // cell.imageView?.image = UIImage(named: "front.jpg")
-         cell.imageView?.loadImageUsingCache(withUrl: "https://unsplash.com/photos/HUBofEFQ6CA/download?force=true")
-         
-         */
-        
-        //      if let url = URL(string: "https://unsplash.com/photos/HUBofEFQ6CA/download?force=true")
-        //        {
-        ////            DispatchQueue.global().async {
-        //                if let data = try? Data(contentsOf: url)
-        //                {
-        //                    DispatchQueue.main.async {
-        //                        cell.imageView?.image = UIImage(data: data)
-        //                        print("image \(data.count)")
-        //                    }
-        //                }
-        //            }
-        ////        }
+        let currentLastItem = albums[indexPath.row]
+        cell.album = currentLastItem
         
         return cell
     }
@@ -181,7 +142,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let vc = DetailController()
-        vc.productDetail = products[indexPath.row]
+        vc.albumDetail = albums[indexPath.row]
         self.navigationController?.pushViewController(vc, animated: true)
             
         

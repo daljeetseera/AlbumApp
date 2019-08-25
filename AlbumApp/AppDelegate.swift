@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  AlbumApp
 //
-//  Created by Daljeet Singh on 25/08/19.
+//  Created by Amish on 25/08/19.
 //  Copyright © 2019 Amish. All rights reserved.
 //
 

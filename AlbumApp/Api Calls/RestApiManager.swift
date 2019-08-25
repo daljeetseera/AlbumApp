@@ -2,61 +2,52 @@
 //  RestApiManager.swift
 //  AlbumApp
 //
-//  Created by Daljeet Singh on 25/08/19.
+//  Created by Amish on 25/08/19.
 //  Copyright © 2019 Amish. All rights reserved.
 //
 
 import Foundation
 
-class ApiManager:NSObject{
-public typealias completionHandler = (_ success : Bool, _ response : resultFeeds?, _ error : Error?) -> ()
-
-func postApi(completion : @escaping completionHandler)
-{
-    guard let url = URL(string: "https://rss.itunes.apple.com/api/v1/us/apple-music/top-albums/all/2/explicit.json") else {return}
-    let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-        guard let dataResponse = data,
-            error == nil else {
-                print(error?.localizedDescription ?? "Response Error")
-                return }
-        do{
-            
-            if let httpResponse = response as? HTTPURLResponse
-            {
-                print(httpResponse.statusCode)
-                if httpResponse.statusCode == 200
+class ApiManager : NSObject {
+    public typealias completionHandler = (_ success : Bool, _ response : [Album]?, _ error : Error?) -> ()
+    
+    func getAlbums(completion : @escaping completionHandler)
+    {
+        guard let url = URL(string: "https://rss.itunes.apple.com/api/v1/us/apple-music/top-albums/all/2/explicit.json") else {return}
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            guard let dataResponse = data,
+                error == nil else {
+                    print(error?.localizedDescription ?? "Response Error")
+                    return }
+            do{
+                
+                if let httpResponse = response as? HTTPURLResponse
                 {
-                 //   let jsonResponse = try JSONSerialization.jsonObject(with: dataResponse, options: []) as! NSDictionary
-                  //  print(jsonResponse) //Response result
-                    
-                 //   let dataNew:Data = try NSKeyedArchiver.archivedData(withRootObject: jsonResponse, requiringSecureCoding: true)
-                    let user = try JSONDecoder().decode(albumModel.self, from: data!)
-                    
-                    if let feeds = user.feed
+                    print(httpResponse.statusCode)
+                    if httpResponse.statusCode == 200
                     {
-                        print("user \(user)")
-                        completion(true, feeds, nil)
-                    } else
-                    {
-                        completion(false, nil, nil)
+                        let response = try JSONSerialization.jsonObject(with: dataResponse, options: .allowFragments)
+                        
+                        if let responseDict = response as? NSDictionary, let feed = responseDict.value(forKey: "feed") as? NSDictionary, let results = feed.value(forKey: "results") as? NSArray {
+                            var albumList = [Album]()
+                            for result in results {
+                                let albumData = try JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)
+                                let album = try JSONDecoder().decode(Album.self, from: albumData)
+                                albumList.append(album)
+                            }
+                            completion(true, albumList, nil)
+                        }
                     }
-                  
                 }
                 else
                 {
                     completion(false, nil, nil)
                 }
+            } catch
+            {
+                print("Parsing Error \(error.localizedDescription)")
             }
-            //here dataResponse received from a network request
-        
-            
-       
-          
-        } catch let parsingError
-        {
-            print("Error", parsingError)
         }
+        task.resume()
     }
-    task.resume()
-}
 }
