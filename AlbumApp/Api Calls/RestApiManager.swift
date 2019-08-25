@@ -7,11 +7,13 @@
 //
 
 import Foundation
-public typealias completionHandler = (_ success : Bool, _ response : Array<Any>?, _ error : Error?) -> ()
 
-func postApi()//(completion : @escaping completionHandler)
+class ApiManager:NSObject{
+public typealias completionHandler = (_ success : Bool, _ response : resultFeeds?, _ error : Error?) -> ()
+
+func postApi(completion : @escaping completionHandler)
 {
-    guard let url = URL(string: "https://rss.itunes.apple.com/api/v1/us/apple-music/top-albums/all/100/explicit.json") else {return}
+    guard let url = URL(string: "https://rss.itunes.apple.com/api/v1/us/apple-music/top-albums/all/2/explicit.json") else {return}
     let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
         guard let dataResponse = data,
             error == nil else {
@@ -24,18 +26,25 @@ func postApi()//(completion : @escaping completionHandler)
                 print(httpResponse.statusCode)
                 if httpResponse.statusCode == 200
                 {
-                    let jsonResponse = try JSONSerialization.jsonObject(with:
-                        dataResponse, options: []) as! NSDictionary
-                    print(jsonResponse) //Response result
+                 //   let jsonResponse = try JSONSerialization.jsonObject(with: dataResponse, options: []) as! NSDictionary
+                  //  print(jsonResponse) //Response result
                     
-                    let dataNew:Data = try NSKeyedArchiver.archivedData(withRootObject: jsonResponse, requiringSecureCoding: true)
+                 //   let dataNew:Data = try NSKeyedArchiver.archivedData(withRootObject: jsonResponse, requiringSecureCoding: true)
                     let user = try JSONDecoder().decode(albumModel.self, from: data!)
-                    print("user \(user)")
-                    completion(true, response.result)
+                    
+                    if let feeds = user.feed
+                    {
+                        print("user \(user)")
+                        completion(true, feeds, nil)
+                    } else
+                    {
+                        completion(false, nil, nil)
+                    }
+                  
                 }
                 else
                 {
-                    completion(false, httpRes)
+                    completion(false, nil, nil)
                 }
             }
             //here dataResponse received from a network request
@@ -49,4 +58,5 @@ func postApi()//(completion : @escaping completionHandler)
         }
     }
     task.resume()
+}
 }

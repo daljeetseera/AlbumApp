@@ -12,7 +12,15 @@ class customCell:UITableViewCell
 {
     var product : Product? {
         didSet {
-            productImage.image = product?.productImage
+            
+            if let imageUrlStr = product?.productImageURL
+            {
+                productImage.loadImageUsingCache(withUrl: imageUrlStr)
+            }
+            else
+            {
+                productImage.image = UIImage(named: "PlaceHolder.png")
+            }
             productNameLabel.text = product?.productName
             productDescriptionLabel.text = product?.productDesc
         }
@@ -72,21 +80,43 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad()
     {
         mainViewFrame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
+        self.createTableView()
         createProductArray()
-        createTableView()
-        postApi()
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
     
     func createProductArray() {
-    
         
-        let img:UIImage = UIImage(named: "PlaceHolder")!
         
-        products.append(Product(productName: "Glasses", productImage: img , productDesc: "This is best Glasses I've ever seen"))
-        products.append(Product(productName: "Desert", productImage: img, productDesc: "This is so yummy"))
-        products.append(Product(productName: "Camera Lens", productImage: img, productDesc: "I wish I had this camera lens"))
+        /*  let img:UIImage = UIImage(named: "PlaceHolder")!
+         
+         products.append(Product(productName: "Glasses", productImage: img , productDesc: "This is best Glasses I've ever seen"))
+         products.append(Product(productName: "Desert", productImage: img, productDesc: "This is so yummy"))
+         products.append(Product(productName: "Camera Lens", productImage: img, productDesc: "I wish I had this camera lens"))
+         */
+        
+        ApiManager().postApi()
+            { (status, result, error) in
+                
+                print("final result \(status)")
+                
+                if status
+                {
+                    if let productArray = result?.results
+                    {
+                        for item in productArray
+                        {
+                            self.products.append(Product(productName: item.artistName ?? "", productImageURL: item.artworkUrl100 ?? "" , productDesc: item.name ?? ""))
+                        }
+                    }
+                    DispatchQueue.main.async  {
+                             self.albumListTable.reloadData()
+                    }
+           
+                }
+            }
+        
     }
     
     func createTableView()
@@ -99,7 +129,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         albumListTable.reloadData()
     }
     
-     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
     
@@ -114,13 +144,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-      //  let cell = tableView.dequeueReusableCell(withIdentifier: cellID) as! customCell
+        //  let cell = tableView.dequeueReusableCell(withIdentifier: cellID) as! customCell
         //   let cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: "CustomCell")
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath as IndexPath) as! customCell
         let currentLastItem = products[indexPath.row]
         cell.product = currentLastItem
-      //  cell.detailTextLabel?.text = currentLastItem.albumDesc
-     //   cell.imageView?.image = currentLastItem.albumImage
+        //  cell.detailTextLabel?.text = currentLastItem.albumDesc
+        //   cell.imageView?.image = currentLastItem.albumImage
         
         /*
          cell.textLabel?.text = "Album \(indexPath.row)"

@@ -10,6 +10,6 @@ import Foundation
 import UIKit
 struct Product {
     var productName : String
-    var productImage : UIImage!
+    var productImageURL : String
     var productDesc : String
 }

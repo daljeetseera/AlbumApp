@@ -17,6 +17,7 @@
 		854BCF62231299A500D18DE8 /* PlaceHolder.png in Resources */ = {isa = PBXBuildFile; fileRef = 854BCF61231299A500D18DE8 /* PlaceHolder.png */; };
 		854BCF642312A3A100D18DE8 /* RestApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854BCF632312A3A100D18DE8 /* RestApiManager.swift */; };
 		854BCF662312A91700D18DE8 /* ApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854BCF652312A91700D18DE8 /* ApiModel.swift */; };
+		854BCF6A2312BFFE00D18DE8 /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854BCF692312BFFE00D18DE8 /* DetailController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		854BCF61231299A500D18DE8 /* PlaceHolder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlaceHolder.png; sourceTree = "<group>"; };
 		854BCF632312A3A100D18DE8 /* RestApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestApiManager.swift; sourceTree = "<group>"; };
 		854BCF652312A91700D18DE8 /* ApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiModel.swift; sourceTree = "<group>"; };
+		854BCF692312BFFE00D18DE8 /* DetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +93,7 @@
 				854BCF4B23125A3A00D18DE8 /* ViewController.swift */,
 				854BCF5D23125E0300D18DE8 /* product.swift */,
 				854BCF5B23125ABF00D18DE8 /* UIImageViewHelper.swift */,
+				854BCF692312BFFE00D18DE8 /* DetailController.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -168,6 +171,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				854BCF5C23125ABF00D18DE8 /* UIImageViewHelper.swift in Sources */,
+				854BCF6A2312BFFE00D18DE8 /* DetailController.swift in Sources */,
 				854BCF5E23125E0300D18DE8 /* product.swift in Sources */,
 				854BCF4C23125A3A00D18DE8 /* ViewController.swift in Sources */,
 				854BCF642312A3A100D18DE8 /* RestApiManager.swift in Sources */,
