@@ -74,11 +74,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         mainViewFrame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
         createProductArray()
         createTableView()
+        postApi()
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
     
     func createProductArray() {
+    
         
         let img:UIImage = UIImage(named: "PlaceHolder")!
         
