@@ -17,14 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
      
-        /*
-        window = UIWindow(frame: UIScreen.main.bounds)
-        let homeViewController = ViewController()
-        homeViewController.view.backgroundColor = UIColor.white
-        window!.rootViewController = homeViewController
-        window!.makeKeyAndVisible()
-        */
-        
         self.navController.navigationBar.isTranslucent = false
         let homeViewController = ViewController()
         self.navController.pushViewController(homeViewController, animated: false)

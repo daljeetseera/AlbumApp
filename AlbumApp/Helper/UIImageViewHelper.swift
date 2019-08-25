@@ -1,9 +1,9 @@
 //
 //  UIImageViewHelper.swift
-//  ContactsApp
+//  AlbumApp
 //
-//  Created by Swati Wadhera on 23/08/19.
-//  Copyright © 2019 Swati Wadhera. All rights reserved.
+//  Created by Amish on 25/08/19.
+//  Copyright © 2019 Amish. All rights reserved.
 //
 
 import UIKit
@@ -21,7 +21,7 @@ extension UIImageView {
             return
         }
         
-//        self.image = AppImage.userPlaceholder
+        self.image = UIImage(named: "PlaceHolder")
         
         guard let url = URL(string: urlString) else {
             return

@@ -9,6 +9,7 @@
 import Foundation
 
 class ApiManager : NSObject {
+    
     public typealias completionHandler = (_ success : Bool, _ response : [Album]?, _ error : Error?) -> ()
     
     func getAlbums(completion : @escaping completionHandler)

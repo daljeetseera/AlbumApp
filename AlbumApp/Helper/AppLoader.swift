@@ -10,11 +10,8 @@ import UIKit
 
 class AppLoader: UIView {
 
-    let tryAgainBtn = UIButton()
     let loaderView = UIActivityIndicatorView()
     let loaderText = UILabel()
-    
-    let animationKey = "rotationAnimation"
     
     override init(frame: CGRect) {
     
@@ -34,16 +31,7 @@ class AppLoader: UIView {
         self.addSubview(loaderText)
         
         self.backgroundColor = .white
-        
-//        tryAgainBtn.frame = CGRect(x: 0, y: loaderText.frame.origin.y - 50, width: 100, height: 40)
-//        tryAgainBtn.backgroundColor = AppColor.green
-//        tryAgainBtn.setTitle("Try Again", for: .normal)
-//        tryAgainBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-//        tryAgainBtn.center = CGPoint(x: frame.size.width/2, y: frame.size.height/2)
-//        tryAgainBtn.contentHorizontalAlignment = .center
-//        tryAgainBtn.contentVerticalAlignment = .center
-//        tryAgainBtn.isHidden = true
-//        self.addSubview(tryAgainBtn)
+    
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -64,7 +52,6 @@ class AppLoader: UIView {
     func showLoaderWithMessage(_ message: String) {
         self.tag = AppConstant.loaderTag
         
-        tryAgainBtn.isHidden = true
         loaderView.startAnimating()
         loaderText.text = message
          
@@ -90,15 +77,12 @@ class AppLoader: UIView {
             if let loader = view.viewWithTag(AppConstant.loaderTag) as? AppLoader {
                 
                 loader.loaderView.stopAnimating()
-                loader.tryAgainBtn.isHidden = false
                 loader.loaderText.text = message
                 
-//                loader.loaderText.frame.origin.y = loader.tryAgainBtn.frame.origin.y + loader.tryAgainBtn.frame.size.height + 10
                 loader.loaderText.frame.origin.x = 20
                 loader.loaderText.frame.size.width = loader.frame.size.width - 40
                 loader.loaderText.sizeToFit()
-                loader.loaderText.frame.origin.y = loader.loaderView.frame.origin.y + loader.loaderView.frame.size.height + 10
-                loader.loaderText.center.x = loader.bounds.size.width/2
+                loader.loaderText.center = CGPoint(x: loader.bounds.size.width/2, y: loader.bounds.size.height/2)
             }
         }
     }
