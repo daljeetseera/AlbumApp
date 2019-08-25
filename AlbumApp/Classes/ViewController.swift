@@ -60,9 +60,9 @@ class customCell : UITableViewCell
         
         albumImage.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 0, width: 90, height: 0, enableInsets: false)
         
-        albumNameLabel.anchor(top: topAnchor, left: albumImage.rightAnchor, bottom: nil, right: nil, paddingTop: 20, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: frame.size.width / 2, height: 0, enableInsets: false)
+        albumNameLabel.anchor(top: topAnchor, left: albumImage.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 20, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: 0, height: 0, enableInsets: false)
         
-        albumDescriptionLabel.anchor(top: albumNameLabel.bottomAnchor, left: albumImage.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: frame.size.width / 2, height: 0, enableInsets: false)
+        albumDescriptionLabel.anchor(top: albumNameLabel.bottomAnchor, left: albumImage.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: 0, height: 0, enableInsets: false)
         
     }
     
@@ -74,16 +74,16 @@ class customCell : UITableViewCell
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource
 {
-    var mainViewFrame = CGRect()
     let albumListTable = UITableView()
     let cellID = "CustomCell"
     var albums = [Album]()
     
     override func viewDidLoad()
     {
-        mainViewFrame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
         self.createTableView()
         fetchAlbums()
+        self.navigationItem.title = "Albums"
+        
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
@@ -115,8 +115,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         albumListTable.register(customCell.self, forCellReuseIdentifier: cellID)
         albumListTable.delegate = self
         albumListTable.dataSource = self
-        albumListTable.frame = mainViewFrame
+        albumListTable.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(albumListTable)
+        
+        albumListTable.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
+        albumListTable.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        albumListTable.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        albumListTable.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+
         albumListTable.reloadData()
     }
     
@@ -139,8 +145,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return cell
     }
     
-        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        tableView.deselectRow(at: indexPath, animated: true)
         let vc = DetailController()
         vc.albumDetail = albums[indexPath.row]
         self.navigationController?.pushViewController(vc, animated: true)

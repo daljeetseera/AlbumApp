@@ -13,10 +13,15 @@ class DetailController: UIViewController {
     var albumDetail : Album!
     let biggerImage = UIImageView()
     let albumBtn = UIButton(type: .custom)
-
+    let scrollView = UIScrollView()
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        self.navigationItem.title = "Album Detail"
+        view.backgroundColor = .white
+        designView()
+
         // Do any additional setup after loading the view.
     }
     
@@ -43,45 +48,40 @@ class DetailController: UIViewController {
         albumBtn.addTarget(self, action: #selector(viewAlbumBtnClicked), for: .touchUpInside)
         self.view.addSubview(albumBtn)
         
-        let guide = view.safeAreaLayoutGuide
+        let guide = view.layoutMarginsGuide
         
-        biggerImage.topAnchor.constraint(equalTo: guide.topAnchor, constant: 20).isActive = true
+        biggerImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
         biggerImage.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         biggerImage.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-        biggerImage.heightAnchor.constraint(equalToConstant: self.view.frame.size.height/2).isActive = true
+        biggerImage.heightAnchor.constraint(equalToConstant: self.view.frame.size.width).isActive = true // width = height
+        
 
         albumBtn.bottomAnchor.constraint(equalTo: guide.bottomAnchor, constant: -20).isActive = true
         albumBtn.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20).isActive = true
         albumBtn.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20).isActive = true
         albumBtn.heightAnchor.constraint(equalToConstant: 40)
         
-        
-        
-        self.perform(#selector(setScrollView), with: nil, afterDelay: 1)
-        
-        
-        
+        setScrollView()
         
     }
     
     @objc func setScrollView() {
         
-        let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(scrollView)
+        view.insertSubview(scrollView, belowSubview: biggerImage)
+    
+        scrollView.anchor(top: biggerImage.bottomAnchor, left: self.view.leftAnchor, bottom: albumBtn.topAnchor, right: self.view.rightAnchor, paddingTop: 10, paddingLeft: 0, paddingBottom: 10, paddingRight: 0, width: 0, height: 0, enableInsets: false)
         
-        scrollView.topAnchor.constraint(equalTo: self.biggerImage.bottomAnchor, constant: 10).isActive = true
-        scrollView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
-        scrollView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
-        scrollView.bottomAnchor.constraint(equalTo: albumBtn.topAnchor, constant: -10).isActive = true
-        
-        var bottomAnchor : NSLayoutYAxisAnchor!
+        var bottomAnchor = scrollView.bottomAnchor
         
         for i in 0...4
         {
             let detailsLbl = UILabel()
+            
             detailsLbl.textAlignment = .center
-            detailsLbl.sizeToFit()
+            detailsLbl.numberOfLines = 0
+            detailsLbl.lineBreakMode = .byWordWrapping
+            detailsLbl.tag = i + 1
             
             switch i {
             case 0:
@@ -101,29 +101,13 @@ class DetailController: UIViewController {
             detailsLbl.translatesAutoresizingMaskIntoConstraints = false
             scrollView.addSubview(detailsLbl)
             
-            
-            if i == 0
-            {
-                NSLayoutConstraint.activate([
-                    detailsLbl.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 0),
-                    detailsLbl.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-                    detailsLbl.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-                    detailsLbl.heightAnchor.constraint(equalToConstant: 25)
-                    ])
-            }
-            else
-            {
-                NSLayoutConstraint.activate([
-                    detailsLbl.topAnchor.constraint(equalTo: bottomAnchor, constant: 10),
-                    detailsLbl.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-                    detailsLbl.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-                    detailsLbl.heightAnchor.constraint(equalToConstant: 25)
-                    ])
-            }
+            detailsLbl.topAnchor.constraint(equalTo: bottomAnchor, constant: 10).isActive = true
+            detailsLbl.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 10).isActive = true
+            detailsLbl.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10).isActive = true
+            detailsLbl.heightAnchor.constraint(greaterThanOrEqualToConstant: 0).isActive = true
             
             bottomAnchor = detailsLbl.bottomAnchor
-            scrollView.contentSize = CGSize(width: scrollView.bounds.size.width, height: detailsLbl.frame.origin.y + detailsLbl.frame.size.height)
-            
+         
         }
     }
     
@@ -135,7 +119,21 @@ class DetailController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        designView()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        var height = CGFloat()
+        for subview in scrollView.subviews {
+            if let label = subview as? UILabel {
+                height = height + 10 + label.frame.size.height
+            }
+        }
+        scrollView.contentSize.height = height
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
     }
     
     

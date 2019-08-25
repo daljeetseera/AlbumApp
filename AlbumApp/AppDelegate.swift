@@ -13,7 +13,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var navController: UINavigationController?
+    var navController = UINavigationController()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
      
@@ -25,10 +25,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window!.makeKeyAndVisible()
         */
         
-        navController = UINavigationController()
-        self.navController!.navigationBar.isTranslucent = false
+        self.navController.navigationBar.isTranslucent = false
         let homeViewController = ViewController()
-        self.navController!.pushViewController(homeViewController, animated: false)
+        self.navController.pushViewController(homeViewController, animated: false)
         self.window = UIWindow(frame: UIScreen.main.bounds)
         
         self.window!.rootViewController = navController

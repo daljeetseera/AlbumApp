@@ -13,7 +13,7 @@ class ApiManager : NSObject {
     
     func getAlbums(completion : @escaping completionHandler)
     {
-        guard let url = URL(string: "https://rss.itunes.apple.com/api/v1/us/apple-music/top-albums/all/2/explicit.json") else {return}
+        guard let url = URL(string: "https://rss.itunes.apple.com/api/v1/us/apple-music/top-albums/all/100/explicit.json") else {return}
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let dataResponse = data,
                 error == nil else {
