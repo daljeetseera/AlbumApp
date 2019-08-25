@@ -144,6 +144,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
+        tableView.deselectRow(at: indexPath, animated: true)
         //  let cell = tableView.dequeueReusableCell(withIdentifier: cellID) as! customCell
         //   let cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: "CustomCell")
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath as IndexPath) as! customCell
@@ -175,6 +176,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         ////        }
         
         return cell
+    }
+    
+        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let vc = DetailController()
+        vc.productDetail = products[indexPath.row]
+        self.navigationController?.pushViewController(vc, animated: true)
+            
+        
     }
     
 }

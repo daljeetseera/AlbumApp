@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+
 struct Product {
     var productName : String
     var productImageURL : String

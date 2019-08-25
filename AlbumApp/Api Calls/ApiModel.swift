@@ -24,5 +24,15 @@ class resultDetails: NSObject, Codable
     var artistName: String?
     var name: String?
     var artworkUrl100: String?
-    
+    var releaseDate: String?
+    var copyright: String?
+    var genres:[genresList]?
+}
+
+class genresList: NSObject, Codable
+{
+    var genreId: String?
+    var name: String?
+    var url: String?
+
 }
