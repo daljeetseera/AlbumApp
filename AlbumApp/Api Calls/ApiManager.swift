@@ -1,20 +1,21 @@
 //
-//  RestApiManager.swift
+//  ApiManager.swift
 //  AlbumApp
 //
-//  Created by Ashish Patel on 25/08/19.
+//  Created by Ashish Patel on 27/09/19.
 //  Copyright © 2019 Ashish Patel. All rights reserved.
 //
 
 import Foundation
 
-class ApiManager : NSObject {
+class ApiManager {
     
-    public typealias completionHandler = (_ success : Bool, _ response : [Album]?, _ error : Error?) -> ()
+    public typealias completionHandler = (_ success: Bool, _ response: [Album]?, _ error: Error?) -> ()
     
-    func getAlbums(completion : @escaping completionHandler)
+    func getAlbums(completion: @escaping completionHandler)
     {
         guard let url = URL(string: "https://rss.itunes.apple.com/api/v1/us/apple-music/top-albums/all/100/explicit.json") else {return}
+        
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let dataResponse = data,
                 error == nil else {

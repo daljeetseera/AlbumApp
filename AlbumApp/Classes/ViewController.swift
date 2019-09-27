@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  AlbumApp
 //
-//  Created by Ashish Patel on 25/08/19.
+//  Created by Ashish Patel on 27/09/19.
 //  Copyright © 2019 Ashish Patel. All rights reserved.
 //
 
@@ -19,11 +19,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad()
     {
         self.createTableView()
-        fetchAlbums()
         self.navigationItem.title = "Albums"
         
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if self.albums.isEmpty {
+            fetchAlbums()
+        }
     }
     
     func fetchAlbums() {
@@ -35,12 +40,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         ApiManager().getAlbums()
             { (status, result, error) in
                 if status {
-                    AppLoader.hideLoaderIn(self.view)
-                    print("final result \(status)")
                     if let albumList = result {
                         self.albums = albumList
                     }
+                    
                     DispatchQueue.main.async  {
+                        AppLoader.hideLoaderIn(self.view)
                         self.albumListTable.reloadData()
                     }
                 } else {
@@ -51,9 +56,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func createTableView()
     {
-        albumListTable.register(customCell.self, forCellReuseIdentifier: cellID)
         albumListTable.delegate = self
         albumListTable.dataSource = self
+        albumListTable.register(AlbumCell.self, forCellReuseIdentifier: cellID)
         albumListTable.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(albumListTable)
         
@@ -76,10 +81,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        tableView.deselectRow(at: indexPath, animated: true)
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath as IndexPath) as! customCell
-        let currentLastItem = albums[indexPath.row]
-        cell.album = currentLastItem
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath as IndexPath) as! AlbumCell
+        cell.album = albums[indexPath.row]
         
         return cell
     }
@@ -87,6 +90,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         tableView.deselectRow(at: indexPath, animated: true)
+        
         let vc = DetailController()
         vc.albumDetail = albums[indexPath.row]
         self.navigationController?.pushViewController(vc, animated: true)

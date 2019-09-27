@@ -13,12 +13,12 @@
 		854BCF5423125A3A00D18DE8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 854BCF5223125A3A00D18DE8 /* LaunchScreen.storyboard */; };
 		854BCF5C23125ABF00D18DE8 /* UIImageViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854BCF5B23125ABF00D18DE8 /* UIImageViewHelper.swift */; };
 		854BCF62231299A500D18DE8 /* PlaceHolder.png in Resources */ = {isa = PBXBuildFile; fileRef = 854BCF61231299A500D18DE8 /* PlaceHolder.png */; };
-		854BCF642312A3A100D18DE8 /* RestApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854BCF632312A3A100D18DE8 /* RestApiManager.swift */; };
+		854BCF642312A3A100D18DE8 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854BCF632312A3A100D18DE8 /* ApiManager.swift */; };
 		854BCF662312A91700D18DE8 /* ApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854BCF652312A91700D18DE8 /* ApiModel.swift */; };
 		854BCF6A2312BFFE00D18DE8 /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854BCF692312BFFE00D18DE8 /* DetailController.swift */; };
 		854BCF6E2312F98B00D18DE8 /* AppLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854BCF6D2312F98B00D18DE8 /* AppLoader.swift */; };
-		854BCF7023130A2300D18DE8 /* UIViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854BCF6F23130A2300D18DE8 /* UIViewHelper.swift */; };
-		854BCF7223130A5A00D18DE8 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854BCF7123130A5A00D18DE8 /* CustomCell.swift */; };
+		854BCF7023130A2300D18DE8 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854BCF6F23130A2300D18DE8 /* UIViewExtension.swift */; };
+		854BCF7223130A5A00D18DE8 /* AlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854BCF7123130A5A00D18DE8 /* AlbumCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,12 +30,12 @@
 		854BCF5523125A3A00D18DE8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		854BCF5B23125ABF00D18DE8 /* UIImageViewHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageViewHelper.swift; sourceTree = "<group>"; };
 		854BCF61231299A500D18DE8 /* PlaceHolder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlaceHolder.png; sourceTree = "<group>"; };
-		854BCF632312A3A100D18DE8 /* RestApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestApiManager.swift; sourceTree = "<group>"; };
+		854BCF632312A3A100D18DE8 /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 		854BCF652312A91700D18DE8 /* ApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiModel.swift; sourceTree = "<group>"; };
 		854BCF692312BFFE00D18DE8 /* DetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
 		854BCF6D2312F98B00D18DE8 /* AppLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppLoader.swift; sourceTree = "<group>"; };
-		854BCF6F23130A2300D18DE8 /* UIViewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewHelper.swift; sourceTree = "<group>"; };
-		854BCF7123130A5A00D18DE8 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		854BCF6F23130A2300D18DE8 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		854BCF7123130A5A00D18DE8 /* AlbumCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +49,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8537140E233E7AB6005B6ED2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				854BCF7123130A5A00D18DE8 /* AlbumCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		854BCF3D23125A3900D18DE8 = {
 			isa = PBXGroup;
 			children = (
@@ -68,6 +76,7 @@
 		854BCF4823125A3A00D18DE8 /* AlbumApp */ = {
 			isa = PBXGroup;
 			children = (
+				8537140E233E7AB6005B6ED2 /* Views */,
 				854BCF6C2312F97800D18DE8 /* Model */,
 				854BCF6B2312F97300D18DE8 /* Helper */,
 				854BCF682312ABDB00D18DE8 /* Classes */,
@@ -84,7 +93,7 @@
 		854BCF672312ABCE00D18DE8 /* Api Calls */ = {
 			isa = PBXGroup;
 			children = (
-				854BCF632312A3A100D18DE8 /* RestApiManager.swift */,
+				854BCF632312A3A100D18DE8 /* ApiManager.swift */,
 			);
 			path = "Api Calls";
 			sourceTree = "<group>";
@@ -94,7 +103,6 @@
 			children = (
 				854BCF4B23125A3A00D18DE8 /* ViewController.swift */,
 				854BCF692312BFFE00D18DE8 /* DetailController.swift */,
-				854BCF7123130A5A00D18DE8 /* CustomCell.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -104,7 +112,7 @@
 			children = (
 				854BCF5B23125ABF00D18DE8 /* UIImageViewHelper.swift */,
 				854BCF6D2312F98B00D18DE8 /* AppLoader.swift */,
-				854BCF6F23130A2300D18DE8 /* UIViewHelper.swift */,
+				854BCF6F23130A2300D18DE8 /* UIViewExtension.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -188,12 +196,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				854BCF7023130A2300D18DE8 /* UIViewHelper.swift in Sources */,
+				854BCF7023130A2300D18DE8 /* UIViewExtension.swift in Sources */,
 				854BCF5C23125ABF00D18DE8 /* UIImageViewHelper.swift in Sources */,
 				854BCF6A2312BFFE00D18DE8 /* DetailController.swift in Sources */,
 				854BCF4C23125A3A00D18DE8 /* ViewController.swift in Sources */,
-				854BCF7223130A5A00D18DE8 /* CustomCell.swift in Sources */,
-				854BCF642312A3A100D18DE8 /* RestApiManager.swift in Sources */,
+				854BCF7223130A5A00D18DE8 /* AlbumCell.swift in Sources */,
+				854BCF642312A3A100D18DE8 /* ApiManager.swift in Sources */,
 				854BCF662312A91700D18DE8 /* ApiModel.swift in Sources */,
 				854BCF4A23125A3A00D18DE8 /* AppDelegate.swift in Sources */,
 				854BCF6E2312F98B00D18DE8 /* AppLoader.swift in Sources */,

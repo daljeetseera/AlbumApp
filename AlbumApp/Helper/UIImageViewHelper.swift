@@ -2,7 +2,7 @@
 //  UIImageViewHelper.swift
 //  AlbumApp
 //
-//  Created by Ashish Patel on 25/08/19.
+//  Created by Ashish Patel on 27/09/19.
 //  Copyright © 2019 Ashish Patel. All rights reserved.
 //
 
@@ -11,7 +11,7 @@ import UIKit
 let imageCache = NSCache<NSString, AnyObject>()
 
 extension UIImageView {
-    func loadImageUsingCache(withUrl urlString : String) {
+    func loadImageUsingCache(withUrl urlString: String) {
         
         self.image = nil
         
@@ -28,13 +28,13 @@ extension UIImageView {
         }
         // if not, download image from url
         URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
-            if error != nil {
-                print(error!)
+            if let myError = error {
+                print(myError)
                 return
             }
             
             DispatchQueue.main.async {
-                if let image = UIImage(data: data!) {
+                if let imgData = data, let image = UIImage(data: imgData) {
                     imageCache.setObject(image, forKey: urlString as NSString)
                     self.image = image
                 }

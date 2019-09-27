@@ -2,32 +2,32 @@
 //  ApiModel.swift
 //  AlbumApp
 //
-//  Created by Ashish Patel on 25/08/19.
+//  Created by Ashish Patel on 27/09/19.
 //  Copyright © 2019 Ashish Patel. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-class Album : Codable
+class Album: Codable
 {
     var artistName: String?
     var name: String?
     var artworkUrl100: String?
     var releaseDate: String?
     var copyright: String?
-    var genres:[genreList]?
-    var url:String?
+    var genres: [GenreList]?
+    var url: String?
 }
 
-class genreList: Codable
+class GenreList: Codable
 {
     var genreId: String?
     var name: String?
     var url: String?
 }
 
-extension Array where Element == genreList {
+extension Array where Element == GenreList {
     
      func getCommaSeparatedValues() -> String {
         

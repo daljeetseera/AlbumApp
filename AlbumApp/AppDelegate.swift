@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  AlbumApp
 //
-//  Created by Ashish Patel on 25/08/19.
+//  Created by Ashish Patel on 27/09/19.
 //  Copyright © 2019 Ashish Patel. All rights reserved.
 //
 
@@ -22,9 +22,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.navController.pushViewController(homeViewController, animated: false)
         self.window = UIWindow(frame: UIScreen.main.bounds)
         
-        self.window!.rootViewController = navController
-        self.window!.backgroundColor = UIColor.white
-        self.window!.makeKeyAndVisible()
+        if let appWindow = self.window {
+            appWindow.rootViewController = navController
+            appWindow.backgroundColor = UIColor.white
+            appWindow.makeKeyAndVisible()
+        }
         
         
         // Override point for customization after application launch.

@@ -2,7 +2,7 @@
 //  DetailController.swift
 //  AlbumApp
 //
-//  Created by Ashish Patel on 25/08/19.
+//  Created by Ashish Patel on 27/09/19.
 //  Copyright © 2019 Ashish Patel. All rights reserved.
 //
 
@@ -10,7 +10,7 @@ import UIKit
 import Foundation
 class DetailController: UIViewController {
     
-    var albumDetail : Album!
+    var albumDetail: Album!
     let biggerImage = UIImageView()
     let albumBtn = UIButton(type: .custom)
     let scrollView = UIScrollView()
@@ -18,11 +18,11 @@ class DetailController: UIViewController {
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
         self.navigationItem.title = "Album Detail"
         view.backgroundColor = .white
         designView()
 
-        // Do any additional setup after loading the view.
     }
     
     func designView()
@@ -41,7 +41,7 @@ class DetailController: UIViewController {
         }
         self.view.addSubview(biggerImage)
         
-        albumBtn.setTitle("View Album", for: .normal)
+        albumBtn.setTitle("View Album on iTunes", for: .normal)
         albumBtn.translatesAutoresizingMaskIntoConstraints = false
         albumBtn.backgroundColor = .black
         albumBtn.layer.cornerRadius = 5
@@ -59,7 +59,7 @@ class DetailController: UIViewController {
         albumBtn.bottomAnchor.constraint(equalTo: guide.bottomAnchor, constant: -20).isActive = true
         albumBtn.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20).isActive = true
         albumBtn.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20).isActive = true
-        albumBtn.heightAnchor.constraint(equalToConstant: 40)
+        albumBtn.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
         setScrollView()
         
@@ -135,16 +135,5 @@ class DetailController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
     }
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
     
 }

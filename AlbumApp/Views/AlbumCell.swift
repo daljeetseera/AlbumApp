@@ -1,16 +1,16 @@
 //
-//  CustomCell.swift
+//  AlbumCell.swift
 //  AlbumApp
 //
-//  Created by Ashish Patel on 25/08/19.
+//  Created by Ashish Patel on 27/09/19.
 //  Copyright © 2019 Ashish Patel. All rights reserved.
 //
 
 import UIKit
 
-class customCell : UITableViewCell
+class AlbumCell: UITableViewCell
 {
-    var album : Album! {
+    var album: Album! {
         didSet {
             
             if let imageUrlStr = album.artworkUrl100
@@ -26,14 +26,14 @@ class customCell : UITableViewCell
         }
     }
     
-    private let albumImage : UIImageView = {
+    private let albumImage: UIImageView = {
         let imgView = UIImageView()
         imgView.contentMode = .scaleAspectFill
         imgView.clipsToBounds = true
         return imgView
     }()
     
-    private let albumNameLabel : UILabel = {
+    private let albumNameLabel: UILabel = {
         let lbl = UILabel()
         lbl.textColor = .black
         lbl.font = UIFont.boldSystemFont(ofSize: 16)
@@ -42,7 +42,7 @@ class customCell : UITableViewCell
     }()
     
     
-    private let albumDescriptionLabel : UILabel = {
+    private let albumDescriptionLabel: UILabel = {
         let lbl = UILabel()
         lbl.textColor = .black
         lbl.font = UIFont.systemFont(ofSize: 16)
@@ -53,6 +53,7 @@ class customCell : UITableViewCell
     
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addSubview(albumImage)
         addSubview(albumNameLabel)

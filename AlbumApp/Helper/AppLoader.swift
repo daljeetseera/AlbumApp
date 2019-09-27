@@ -2,7 +2,7 @@
 //  AppLoader.swift
 //  AlbumApp
 //
-//  Created by Ashish Patel on 25/08/19.
+//  Created by Ashish Patel on 27/09/19.
 //  Copyright © 2019 Ashish Patel. All rights reserved.
 //
 
@@ -59,7 +59,7 @@ class AppLoader: UIView {
         loaderText.center = CGPoint(x: self.center.x, y: loaderText.center.y)
     }
     
-    class func hideLoaderIn(_ view : UIView) {
+    class func hideLoaderIn(_ view: UIView) {
         DispatchQueue.main.async {
             if let loader = view.viewWithTag(AppConstant.loaderTag) as? AppLoader {
                 UIView.animate(withDuration: 0.25, animations: {
@@ -71,7 +71,7 @@ class AppLoader: UIView {
         }
     }
     
-    class func showErrorIn(view : UIView, withMessage message: String) {
+    class func showErrorIn(view: UIView, withMessage message: String) {
         DispatchQueue.main.async {
 
             if let loader = view.viewWithTag(AppConstant.loaderTag) as? AppLoader {
