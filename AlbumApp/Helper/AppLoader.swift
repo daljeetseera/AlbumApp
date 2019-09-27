@@ -2,8 +2,8 @@
 //  AppLoader.swift
 //  AlbumApp
 //
-//  Created by Amish on 25/08/19.
-//  Copyright © 2019 Amish. All rights reserved.
+//  Created by Ashish Patel on 25/08/19.
+//  Copyright © 2019 Ashish Patel. All rights reserved.
 //
 
 import UIKit
